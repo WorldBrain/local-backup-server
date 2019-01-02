@@ -1,0 +1,16 @@
+{
+  "name": "local_backup_server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "HTTPKoaServer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^2.6.2",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^7.4.0"
+  }
+}
