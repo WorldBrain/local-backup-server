@@ -1,2 +1,4 @@
 node_modules/*
 package-lock.json
+backup/*
+.DS_Store
