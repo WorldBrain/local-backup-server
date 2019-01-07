@@ -1,3 +1,4 @@
+require('dotenv').config()
 var fs = require('fs')
 var mkdirp = require('mkdirp')
 var Koa = require('koa')
@@ -6,7 +7,7 @@ var bodyparser = require('koa-bodyparser')
 
 let app = new Koa()
 let router = new Router({ prefix: '/backup' })
-const port = 11922
+const port = process.env.KOA_PORT
 
 // error handling
 app.use(async (ctx, next) => {
