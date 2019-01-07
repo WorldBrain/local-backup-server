@@ -7,7 +7,7 @@ var bodyparser = require('koa-bodyparser')
 
 let app = new Koa()
 let router = new Router({ prefix: '/backup' })
-const port = process.env.KOA_PORT
+const port = 11922
 
 // error handling
 app.use(async (ctx, next) => {
