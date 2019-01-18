@@ -1,4 +1,3 @@
-require('dotenv').config()
 var fs = require('fs')
 var mkdirp = require('mkdirp')
 var Koa = require('koa')
