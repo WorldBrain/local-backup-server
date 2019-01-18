@@ -7,6 +7,8 @@ __Dependencies:__
 ```bash
 # make sure npm & node <=10 is installed on your system
 npm i pkg -g
+# install the repos local dependencies from its package.json
+npm install
 ```
 
 __Rebuild:__
