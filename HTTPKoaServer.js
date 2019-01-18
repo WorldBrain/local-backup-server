@@ -65,8 +65,12 @@ router.get('/:collection/:timestamp', (ctx, next) => {
 router.get('/:collection', (ctx, next) => {
     const collection = ctx.params.collection
     const dirpath = process.cwd() + `/backup/${collection}`
-    try { 
-        const filelist = fs.readdirSync(dirpath, 'utf-8')
+    try {
+        let filelist = fs.readdirSync(dirpath, 'utf-8')
+        filelist = filelist.filter( (filename) => {
+            // check if filename contains digits only to ignore system files like .DS_STORE
+            return /^\d+$/.test(filename)
+        })
         ctx.body = filelist.toString()
     } catch (err) {
         if (err.code === 'ENOENT') {
