@@ -5,7 +5,7 @@ var Router = require('koa-router')
 var bodyparser = require('koa-bodyparser')
 
 let app = new Koa()
-let router = new Router({ prefix: '/backup' })
+let router = new Router()
 const port = 11922
 
 // error handling
@@ -31,8 +31,20 @@ app.use(
     }),
 )
 
+// getting server status
+router.get('/status', (ctx) => {
+    ctx.status = 200
+    ctx.body = 'running'
+})
+
+// get the backup folder location
+router.get('/backup/location', (ctx) => {
+    ctx.body = process.cwd()
+    ctx.status = 200
+})
+
 // putting new files
-router.put('/:collection/:timestamp', (ctx, next) => {
+router.put('/backup/:collection/:timestamp', (ctx) => {
     const filename = ctx.params.timestamp
     const collection = ctx.params.collection
     const dirpath = process.cwd() + `/backup/${collection}`
@@ -47,7 +59,7 @@ router.put('/:collection/:timestamp', (ctx, next) => {
 })
 
 // getting files
-router.get('/:collection/:timestamp', (ctx, next) => {
+router.get('/backup/:collection/:timestamp', (ctx) => {
     const filename = ctx.params.timestamp
     const collection = ctx.params.collection
     const filepath = process.cwd() + `/backup/${collection}/` + filename
@@ -62,7 +74,7 @@ router.get('/:collection/:timestamp', (ctx, next) => {
 })
 
 // listing files
-router.get('/:collection', (ctx, next) => {
+router.get('/backup/:collection', (ctx) => {
     const collection = ctx.params.collection
     const dirpath = process.cwd() + `/backup/${collection}`
     try {
