@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <img src="./img/icon_128x128.png">
+        <p class="info">Please choose a folder for your local backups.</p>
+        <div class="select-container">
+            <button class="cancel">X</button>
+            <button class="folder-select-bg">Select Folder</button>
+            <input type="file" id="folderSelect" nwdirectory directory>
+        </div>
+        <p id="pathPara"></p>
+        <button id="applyButton" onclick="apply();" disabled>Apply</button>
+        <link rel="stylesheet" type="text/css" href="./folder-select.css">
+        <script src="./HTTPKoaServer.js" ></script>
+        <script>
+
+            var win = gui.Window.get()
+            var folderSelect = document.getElementById('folderSelect')
+            var applyButton = document.getElementById('applyButton')
+            var pathPara = document.getElementById('pathPara')
+
+            async function apply() {
+                const path = folderSelect.value
+                if (path) {
+                    fs.writeFileSync('./backup_location.txt', path)
+                    updateBackupLocation()
+                    close()
+                }
+            }
+
+            async function close() {
+                win.hide()
+            }
+
+            folderSelect.addEventListener('change', () => {
+                var path = '' + folderSelect.value
+                if (path) {
+                    if (path.length > 35) {
+                        path = '...' + path.slice(-35)
+                    }
+                    applyButton.disabled = false
+                    pathPara.innerHTML = '<span>Backups will be saved to:</span><br>'
+                    + path;
+                } else {
+                    applyButton.disabled = true
+                }
+            })
+        </script>
+    </body>
+</html>

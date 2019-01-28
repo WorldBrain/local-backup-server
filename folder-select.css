@@ -1,0 +1,84 @@
+body {
+    font-family: sans-serif;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto auto auto 1fr;
+    justify-items: center;
+    grid-template-areas:
+        "logo"
+        "para"
+        "file_input"
+        "path"
+        "apply_button";
+}
+p {
+    color: #424242;
+}
+img {
+    grid-area: logo;
+}
+.info {
+    grid-area: para;
+    font-weight: 500;
+}
+.select-container {
+    grid-area: file_input;
+    width: 100px;
+    height: 30px;
+    width: 120px;
+}
+.folder-select-bg {
+    position: absolute;
+    background-color: #424242;
+    width: 120px;
+    height: 30px;
+    border-radius: 4px;
+    font-size: 15px;
+    font-weight: bold;
+}
+input {
+    position: absolute;
+    border-radius: 3px;
+    font-size: 0px;
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 10px 50px 10px 50px;
+    margin-left: 10px;
+    margin-top: 5px;
+    border-color: transparent;
+    background-color: transparent;
+    border-radius: 5px;
+}
+input:focus {
+    outline: none;
+}
+#pathPara {
+    text-align: center;
+    grid-area: path;
+    font-size: 16px;
+    font-weight: 300;
+}
+#pathPara span {
+    text-align: center;
+    font-weight: 600;
+    font-size: 14px;
+}
+#applyButton {
+    grid-area: apply_button;
+    align-self: end;
+    background-color: #6DaD87;
+    width: 100px;
+    height: 40px;
+    border-radius: 4px;
+}
+#applyButton:disabled {
+    visibility: hidden;
+}
+.cancel {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-weight: 800;
+    font-size: 18px;
+}

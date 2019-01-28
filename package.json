@@ -1,9 +1,19 @@
 {
-  "name": "local-backup-server",
-  "version": "1.0.0",
-  "description": "Local Koa server for local memex browser extension backups.",
-  "bin": "HTTPKoaServer.js",
-  "main": "HTTPKoaServer.js",
+  "name": "memex-backup-server",
+  "description": "Server for local memex backups.",
+  "product_string": "Memex Local Backups",
+  "version": "0.3.0",
+  "main": "folder-select.html",
+  "window": {
+    "show": false,
+    "resizable": false,
+    "always-on-top": true,
+    "show-in-taskbar": false,
+    "frame": false,
+    "title": "Memex Backup - Select Folder",
+    "width": 370,
+    "height": 345
+  },
   "author": "Eike Mücksch",
   "license": "MIT",
   "dependencies": {
@@ -11,5 +21,14 @@
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
     "mkdirp": "^0.5.1"
+  },
+  "devDependencies": {
+    "nwjs-builder-phoenix": "^1.15.0"
+  },
+  "build": {
+    "nwVersion": "0.35.5"
+  },
+  "scripts": {
+    "dist": "build --tasks win-x86,win-x64,linux-x86,linux-x64,mac-x64 --mirror https://dl.nwjs.io/ ."
   }
 }

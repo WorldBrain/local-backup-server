@@ -3,3 +3,5 @@ package-lock.json
 backup/*
 .DS_Store
 local-backup-server-*
+.vscode
+dist

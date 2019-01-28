@@ -3,10 +3,18 @@ var mkdirp = require('mkdirp')
 var Koa = require('koa')
 var Router = require('koa-router')
 var bodyparser = require('koa-bodyparser')
+var gui = require('nw.gui')
 
 let app = new Koa()
 let router = new Router()
+let server = undefined;
+
 const port = 11922
+let backupPath = ''
+
+// ###########
+// Koa Server
+// ###########
 
 // error handling
 app.use(async (ctx, next) => {
@@ -39,7 +47,7 @@ router.get('/status', (ctx) => {
 
 // get the backup folder location
 router.get('/backup/location', (ctx) => {
-    ctx.body = process.cwd()
+    ctx.body = backupPath
     ctx.status = 200
 })
 
@@ -47,7 +55,7 @@ router.get('/backup/location', (ctx) => {
 router.put('/backup/:collection/:timestamp', (ctx) => {
     const filename = ctx.params.timestamp
     const collection = ctx.params.collection
-    const dirpath = process.cwd() + `/backup/${collection}`
+    const dirpath = backupPath + `/backup/${collection}`
     mkdirp(dirpath, function(err) {
         if (err) throw err
         const filepath = dirpath + `/${filename}`
@@ -62,7 +70,7 @@ router.put('/backup/:collection/:timestamp', (ctx) => {
 router.get('/backup/:collection/:timestamp', (ctx) => {
     const filename = ctx.params.timestamp
     const collection = ctx.params.collection
-    const filepath = process.cwd() + `/backup/${collection}/` + filename
+    const filepath = backupPath + `/backup/${collection}/` + filename
     try {
         ctx.body = fs.readFileSync(filepath, 'utf-8')
     } catch (err) {
@@ -76,7 +84,7 @@ router.get('/backup/:collection/:timestamp', (ctx) => {
 // listing files
 router.get('/backup/:collection', (ctx) => {
     const collection = ctx.params.collection
-    const dirpath = process.cwd() + `/backup/${collection}`
+    const dirpath = backupPath + `/backup/${collection}`
     try {
         let filelist = fs.readdirSync(dirpath, 'utf-8')
         filelist = filelist.filter( (filename) => {
@@ -94,6 +102,88 @@ router.get('/backup/:collection', (ctx) => {
 
 app.use(router.routes())
 app.use(router.allowedMethods())
-app.listen(port, function() {
-    console.log('Server running on https://localhost:' + port)
-})
+
+
+// #####################
+// nw.js server controls
+// #####################
+
+// initialization of the tray menu
+var tray = new nw.Tray({ tooltip: 'Memex Local Server', icon: 'img/tray_icon.png'})
+var menu = new nw.Menu();
+var submenu = new nw.Menu();
+var itemStartServer = new nw.MenuItem({ type: 'normal', label: 'Start Server', tooltip: 'Click here to start the memex backup server.', click: startServer, enabled: false })
+var itemStopServer = new nw.MenuItem({ type: 'normal', label: 'Stop Server', tooltip: 'Click here to stop the memex backup server.', click: stopServer, enabled: false })
+submenu.append(itemStartServer)
+submenu.append(itemStopServer)
+var itemServerStatus = new nw.MenuItem({ type: 'normal', iconIsTemplate: false, label: 'no backup folder selected', submenu: submenu })
+var itemOpenBackup = new nw.MenuItem({ type: 'normal', label: 'open backup folder', tooltip: 'Click here to open the backup folder.', click: openBackupFolder })
+var itemChangeFolder = new nw.MenuItem({ type: 'normal', label: 'change backup folder', tooltip: 'Click here to change the backup folder.', click: openBackupFolderSelectDialog })
+var itemCloseApp = new nw.MenuItem({ type: 'normal', label: 'Quit', click: closeApp })
+menu.append(itemServerStatus)
+menu.append(new nw.MenuItem({ type: 'separator' }))
+menu.append(itemOpenBackup)
+menu.append(itemChangeFolder)
+menu.append(new nw.MenuItem({ type: 'separator' }))
+menu.append(itemCloseApp)
+tray.menu = menu;
+
+updateBackupLocation()
+
+async function closeApp() {
+    stopServer()
+    closeTray()
+    nw.App.quit()
+}
+
+async function closeTray() {
+    if (tray) {
+        tray.remove()
+        tray = null
+    }
+}
+
+async function updateBackupLocation() {
+    stopServer()
+    backupPath = fs.readFileSync('./backup_location.txt', 'utf-8')
+    if (backupPath) {
+        itemOpenBackup.enabled = true
+        startServer()
+    } else {
+        itemOpenBackup.enabled = false
+        openBackupFolderSelectDialog()
+    }
+}
+
+function openBackupFolderSelectDialog() {
+    gui.Window.get().show()
+}
+
+function openBackupFolder() {
+    if (fs.existsSync(backupPath + '/backup')) {
+        nw.Shell.openItem(backupPath + '/backup')
+    } else {
+        nw.Shell.openItem(backupPath)
+    }
+}
+
+async function startServer() {
+    if (!server) {
+        server = app.listen(port)
+        itemStartServer.enabled = false
+        itemStopServer.enabled = true
+        itemServerStatus.label = 'Server running'
+        itemServerStatus.icon = './img/active.png'
+    }
+}
+
+async function stopServer() {
+    if (server) {
+        server.close()
+        server = undefined
+        itemStopServer.enabled = false
+        itemStartServer.enabled = true
+        itemServerStatus.label = 'Server not running'
+        itemServerStatus.icon = './img/inactive.png'
+    }
+}
