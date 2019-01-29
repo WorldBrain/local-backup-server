@@ -51,6 +51,12 @@ router.get('/backup/location', (ctx) => {
     ctx.status = 200
 })
 
+router.get('/backup/open-change-location', (ctx) => {
+    openBackupFolderSelectDialog()
+    ctx.body = 'success'
+    ctx.status = 200
+})
+
 // putting new files
 router.put('/backup/:collection/:timestamp', (ctx) => {
     const filename = ctx.params.timestamp

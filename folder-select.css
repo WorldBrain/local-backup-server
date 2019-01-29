@@ -81,4 +81,6 @@ input:focus {
     right: 15px;
     font-weight: 800;
     font-size: 18px;
+    color: #424242;
+    cursor: pointer;
 }

@@ -5,8 +5,8 @@
     <body>
         <img src="./img/icon_128x128.png">
         <p class="info">Please choose a folder for your local backups.</p>
+        <button class="cancel" id="cancelButton">X</button>
         <div class="select-container">
-            <button class="cancel">X</button>
             <button class="folder-select-bg">Select Folder</button>
             <input type="file" id="folderSelect" nwdirectory directory>
         </div>
@@ -20,6 +20,7 @@
             var folderSelect = document.getElementById('folderSelect')
             var applyButton = document.getElementById('applyButton')
             var pathPara = document.getElementById('pathPara')
+            var cancelButton = document.getElementById('cancelButton')
 
             async function apply() {
                 const path = folderSelect.value
@@ -46,6 +47,9 @@
                 } else {
                     applyButton.disabled = true
                 }
+            })
+            cancelButton.addEventListener('click', () => {
+                close()
             })
         </script>
     </body>
