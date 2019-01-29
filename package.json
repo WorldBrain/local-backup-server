@@ -1,7 +1,6 @@
 {
   "name": "memex-backup-server",
   "description": "Server for local memex backups.",
-  "product_string": "Memex Local Backups",
   "version": "0.3.0",
   "main": "folder-select.html",
   "window": {
@@ -21,9 +20,6 @@
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
     "mkdirp": "^0.5.1"
-  },
-  "devDependencies": {
-    "nwjs-builder-phoenix": "^1.15.0"
   },
   "build": {
     "nwVersion": "0.35.5"
