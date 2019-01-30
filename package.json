@@ -7,7 +7,7 @@
     "show": false,
     "resizable": false,
     "always-on-top": true,
-    "show-in-taskbar": false,
+    "show_in_taskbar": false,
     "frame": false,
     "title": "Memex Backup - Select Folder",
     "width": 370,
