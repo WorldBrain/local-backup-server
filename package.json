@@ -1,11 +1,11 @@
 {
-  "name": "memex-backup-server",
-  "description": "Server for local memex backups.",
-  "version": "0.3.0",
+  "name": "MemexBackupHelper",
+  "description": "Local app to make your Memex backups to any folder.",
+  "version": "0.4.0",
   "main": "folder-select.html",
   "window": {
     "show": false,
-    "icon": "img/appIcon.icns",
+    "icon": "./img/appIcon.icns",
     "resizable": false,
     "always-on-top": true,
     "show_in_taskbar": false,
