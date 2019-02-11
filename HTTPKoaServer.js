@@ -137,8 +137,6 @@ menu.append(new nw.MenuItem({ type: 'separator' }))
 menu.append(itemCloseApp)
 tray.menu = menu;
 
-updateBackupLocation()
-
 async function closeApp() {
     stopServer()
     closeTray()
@@ -158,14 +156,12 @@ async function updateBackupLocation() {
     if (backupPath) {
         itemOpenBackup.enabled = true
         startServer()
+        win.focus()
     } else {
         itemOpenBackup.enabled = false
         openBackupFolderSelectDialog()
+        win.focus()
     }
-}
-
-function openBackupFolderSelectDialog() {
-    gui.Window.get().show()
 }
 
 function openBackupFolder() {
@@ -196,3 +192,11 @@ async function stopServer() {
         itemServerStatus.icon = './img/inactive.png'
     }
 }
+
+function openBackupFolderSelectDialog() {
+    gui.Window.get().show()
+    win.focus()
+}
+
+updateBackupLocation()
+openBackupFolderSelectDialog()

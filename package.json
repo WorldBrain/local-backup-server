@@ -4,7 +4,7 @@
   "version": "0.3.0",
   "main": "folder-select.html",
   "window": {
-    "show": true,
+    "show": false,
     "icon": "img/appIcon.icns",
     "resizable": false,
     "always-on-top": true,
