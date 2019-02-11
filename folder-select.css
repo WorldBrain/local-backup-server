@@ -1,5 +1,5 @@
 body {
-    font-family: sans-serif;
+    font-family: 'Inter';
     display: grid;
     grid-template-columns: auto;
     grid-template-rows: auto auto auto auto 1fr;
@@ -12,10 +12,15 @@ body {
         "apply_button";
 }
 p {
-    color: #424242;
+    color: #173766;
+    font-weight: 200;
+    font-size: 16px;
 }
 img {
     grid-area: logo;
+    width: 70%;
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
 .info {
     grid-area: para;
@@ -26,15 +31,23 @@ img {
     width: 100px;
     height: 30px;
     width: 120px;
+    cursor: pointer;
 }
 .folder-select-bg {
     position: absolute;
-    background-color: #424242;
     width: 120px;
     height: 30px;
-    border-radius: 4px;
+    color: white;
     font-size: 15px;
-    font-weight: bold;
+    cursor: pointer;
+    border: 2px solid #173766;
+    background-color: #173766;
+    border-radius: 5px;
+
+    &:hover {
+        color: #173766;
+        background-color: white;
+    }
 }
 input {
     position: absolute;
@@ -49,38 +62,60 @@ input {
     border-color: transparent;
     background-color: transparent;
     border-radius: 5px;
+    cursor: pointer;
 }
 input:focus {
     outline: none;
+    cursor: pointer;
 }
 #pathPara {
     text-align: center;
     grid-area: path;
     font-size: 16px;
+    color: #3eb995;
+    font-style: italic;
     font-weight: 300;
 }
 #pathPara span {
     text-align: center;
     font-weight: 600;
     font-size: 14px;
+    margin-top: 35px;
+    color: #173766;
+    font-style: normal;
 }
 #applyButton {
     grid-area: apply_button;
     align-self: end;
-    background-color: #6DaD87;
+    background-color: white;
+    border: 2px solid #3eb995;
     width: 100px;
+    color: #3eb995;
+    font-size: 16px;
     height: 40px;
     border-radius: 4px;
+    cursor: pointer;   
+
+    &:hover {
+        background-color: #3eb995;
+        color: white;
+    }
 }
+
 #applyButton:disabled {
     visibility: hidden;
 }
 .cancel {
     position: absolute;
-    top: 15px;
     right: 15px;
-    font-weight: 800;
-    font-size: 18px;
+    margin-top: -15px;
     color: #424242;
     cursor: pointer;
+    width: 25px;
+    height: 25px;
+
+    &:hover {
+        background-color: #efefef;
+        border-radius: 20px;
+    }
 }
