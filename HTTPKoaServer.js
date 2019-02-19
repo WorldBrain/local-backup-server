@@ -51,9 +51,9 @@ router.get('/backup/location', (ctx) => {
     ctx.status = 200
 })
 
-router.get('/backup/open-change-location', (ctx) => {
-    openBackupFolderSelectDialog()
-    ctx.body = 'success'
+router.get('/backup/start-change-location', async (ctx) => {
+    // selectNewBackupFolder()
+    ctx.body = await selectNewBackupFolder()
     ctx.status = 200
 })
 
@@ -124,7 +124,7 @@ submenu.append(itemStartServer)
 submenu.append(itemStopServer)
 var itemServerStatus = new nw.MenuItem({ type: 'normal', iconIsTemplate: false, label: 'no backup folder selected', submenu: submenu })
 var itemOpenBackup = new nw.MenuItem({ type: 'normal', label: 'open backup folder', tooltip: 'Click here to open the backup folder.', click: openBackupFolder })
-var itemChangeFolder = new nw.MenuItem({ type: 'normal', label: 'change backup folder', tooltip: 'Click here to change the backup folder.', click: openBackupFolderSelectDialog })
+var itemChangeFolder = new nw.MenuItem({ type: 'normal', label: 'change backup folder', tooltip: 'Click here to change the backup folder.', click: selectNewBackupFolder })
 var itemCloseApp = new nw.MenuItem({ type: 'normal', label: 'Quit', click: closeApp })
 menu.append(itemServerStatus)
 menu.append(new nw.MenuItem({ type: 'separator' }))
@@ -157,15 +157,34 @@ async function updateBackupLocation() {
         startServer()
     } else {
         itemOpenBackup.enabled = false
-        openBackupFolderSelectDialog()
+        selectNewBackupFolder()
     }
 }
 
-function openBackupFolderSelectDialog() {
-    gui.Window.get().show()
+async function closeFolderSelect() {
+    gui.Window.get().hide()
 }
 
-function openBackupFolder() {
+async function selectNewBackupFolder() {
+    return new Promise( (res) => {
+        gui.Window.get().show()
+        document.getElementById('applyButton')
+        .addEventListener('click', async () => {
+            const path = document.getElementById('folderSelect').value
+            fs.writeFileSync('./backup_location.txt', path)
+            updateBackupLocation()
+            closeFolderSelect()
+            res(path)
+        })
+        document.getElementById('cancelButton')
+        .addEventListener('click', async () => {
+            closeFolderSelect()
+            res('')
+        })
+    })
+}
+
+async function openBackupFolder() {
     if (fs.existsSync(backupPath + '/backup')) {
         nw.Shell.openItem(backupPath + '/backup')
     } else {

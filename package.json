@@ -23,7 +23,6 @@
   },
   "build": {
     "nwVersion": "0.35.5",
-    "packed": true,
     "targets": [
       "zip"
     ]

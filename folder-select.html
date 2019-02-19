@@ -11,7 +11,7 @@
             <input type="file" id="folderSelect" nwdirectory directory>
         </div>
         <p id="pathPara"></p>
-        <button id="applyButton" onclick="apply();" disabled>Apply</button>
+        <button id="applyButton" disabled>Apply</button>
         <link rel="stylesheet" type="text/css" href="./folder-select.css">
         <script src="./HTTPKoaServer.js" ></script>
         <script>
@@ -22,19 +22,6 @@
             var applyButton = document.getElementById('applyButton')
             var pathPara = document.getElementById('pathPara')
             var cancelButton = document.getElementById('cancelButton')
-
-            async function apply() {
-                const path = folderSelect.value
-                if (path) {
-                    fs.writeFileSync('./backup_location.txt', path)
-                    updateBackupLocation()
-                    close()
-                }
-            }
-
-            async function close() {
-                win.hide()
-            }
 
             folderSelect.addEventListener('change', () => {
                 var path = '' + folderSelect.value
@@ -48,9 +35,6 @@
                 } else {
                     applyButton.disabled = true
                 }
-            })
-            cancelButton.addEventListener('click', () => {
-                close()
             })
         </script>
     </body>
