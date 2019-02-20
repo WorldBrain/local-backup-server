@@ -115,8 +115,9 @@ app.use(router.allowedMethods())
 // #####################
 
 // initialization of the tray menu
-var tray = new nw.Tray({ tooltip: 'Memex Local Server', icon: 'img/tray_icon.png'})
+var tray = new nw.Tray({ tooltip: 'Memex Backup Helper', icon: 'img/tray_icon.png'})
 var menu = new nw.Menu();
+var AppName = new nw.MenuItem({ type: 'normal', label: 'Memex Backup Helper'})
 var submenu = new nw.Menu();
 var itemStartServer = new nw.MenuItem({ type: 'normal', label: 'Start Server', tooltip: 'Click here to start the memex backup server.', click: startServer, enabled: false })
 var itemStopServer = new nw.MenuItem({ type: 'normal', label: 'Stop Server', tooltip: 'Click here to stop the memex backup server.', click: stopServer, enabled: false })
@@ -134,8 +135,6 @@ menu.append(new nw.MenuItem({ type: 'separator' }))
 menu.append(itemCloseApp)
 tray.menu = menu;
 
-updateBackupLocation()
-
 async function closeApp() {
     stopServer()
     closeTray()
@@ -149,7 +148,7 @@ async function closeTray() {
     }
 }
 
-async function updateBackupLocation() {
+function updateBackupLocation() {
     stopServer()
     backupPath = fs.readFileSync('./backup_location.txt', 'utf-8')
     if (backupPath) {
@@ -172,8 +171,8 @@ async function selectNewBackupFolder() {
         .addEventListener('click', async () => {
             const path = document.getElementById('folderSelect').value
             fs.writeFileSync('./backup_location.txt', path)
-            updateBackupLocation()
             closeFolderSelect()
+            updateBackupLocation()
             res(path)
         })
         document.getElementById('cancelButton')
@@ -212,3 +211,7 @@ async function stopServer() {
         itemServerStatus.icon = './img/inactive.png'
     }
 }
+
+gui.Window.get().on('loaded', () => {
+    updateBackupLocation()
+})
