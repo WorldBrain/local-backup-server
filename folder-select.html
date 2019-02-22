@@ -24,14 +24,20 @@
             var pathPara = document.getElementById('pathPara')
             var cancelButton = document.getElementById('cancelButton')
 
+            win.on('loaded', () => {
+                if (backupPath) {
+                    pathPara.innerHTML = '<span>Backup Location:</span><br>'
+                    + backupPath; 
+                }
+            })
             folderSelect.addEventListener('change', () => {
                 var path = '' + folderSelect.value
-                if (path) {
+                if (path && path != backupPath) {
                     if (path.length > 35) {
                         path = '...' + path.slice(-35)
                     }
                     applyButton.disabled = false
-                    pathPara.innerHTML = '<span class="">Backup Location:</span><br>'
+                    pathPara.innerHTML = '<span>Backup Location:</span><br>'
                     + path;
                 } else {
                     applyButton.disabled = true
