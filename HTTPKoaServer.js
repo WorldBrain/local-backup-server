@@ -170,7 +170,8 @@ async function selectNewBackupFolder() {
     return new Promise( (res) => {
         gui.Window.get().show()
         document.getElementById('applyButton')
-        .addEventListener('click', async () => {
+        .addEventListener('click', async (event) => {
+            event.target.disabled = true;
             const path = document.getElementById('folderSelect').value
             fs.writeFileSync('./backup_location.txt', path)
             closeFolderSelect()
