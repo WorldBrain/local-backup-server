@@ -1,22 +1,11 @@
-# local-backup-server
 Nodejs server for local backups of the memex browser extension.
 
-## Rebuilding desktop applications
+## installation
+Get the newest [release](https://github.com/WorldBrain/local-backup-server/releases) for your platform.
 
-__Dependencies:__
-```bash
-# make sure npm & node <=10 is installed on your system
-npm i pkg -g
-# install the repos local dependencies from its package.json
-npm install
-```
-
-__Rebuild:__
-```bash
-# macos, linux & windows
-pkg .
-# just for the host os
-pkg . -t host
-```
-
-For more information on using pkg visit https://github.com/zeit/pkg
+## rebuild & contribution
+1. clone master to your local drive
+2. make sure [node.js](https://nodejs.org/en/) 9 is installed on your machine
+3. install the dependencies by running `npm install`
+4. get the [nw.js binary](https://nwjs.io)
+5. run the project by running `/path/to/nwjs-binary .` from the projects folder

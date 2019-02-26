@@ -1,17 +1,18 @@
 {
-  "name": "memex-backup-server",
-  "description": "Server for local memex backups.",
-  "version": "0.3.0",
+  "name": "memex-backup-helper",
+  "description": "Local app to make your Memex backups to any folder.",
+  "version": "0.4.0",
   "main": "folder-select.html",
   "window": {
     "show": false,
+    "icon": "./img/appIcon.icns",
     "resizable": false,
     "always-on-top": true,
-    "show-in-taskbar": false,
+    "show_in_taskbar": false,
     "frame": false,
-    "title": "Memex Backup - Select Folder",
+    "title": "Memex Backup Helper",
     "width": 370,
-    "height": 345
+    "height": 360
   },
   "author": "Eike Mücksch",
   "license": "MIT",
@@ -23,13 +24,13 @@
   },
   "build": {
     "nwVersion": "0.35.5",
-    "packed": true,
     "targets": [
       "zip"
     ]
   },
   "scripts": {
-    "dist": "build --tasks win-x64,linux-x64,mac-x64 --mirror https://dl.nwjs.io/ . --concurrent"
+    "dist": "build --tasks win-x64,linux-x64,mac-x64 --mirror https://dl.nwjs.io/ . --concurrent",
+    "mac": "build --tasks mac-x64 --mirror https://dl.nwjs.io/ . --concurrent"
   },
   "devDependencies": {
     "nwjs-builder-phoenix": "^1.15.0"
