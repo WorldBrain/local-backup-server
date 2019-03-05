@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 mkdir /usr/local/bin/MemexBackupHelper
 cd ./src
 shopt -s extglob dotglob
