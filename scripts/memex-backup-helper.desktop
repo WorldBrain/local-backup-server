@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Exec=/home/%%user%%/.memex-backup-helper/memex-backup-helper
+Name=Memex Backup Helper
+Comment=Memex Local Backup Helper
+Icon=/home/%%user%%/.memex-backup-helper/img/appIcon.png
+Categories=Application;

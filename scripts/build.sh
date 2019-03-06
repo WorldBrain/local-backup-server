@@ -1,6 +1,6 @@
 #!/bin/bash
 build --tasks win-x64,linux-x64,mac-x64 --mirror https://dl.nwjs.io/ . --concurrent
-cp ./scripts/MemexBackupHelper.desktop ./dist/memex-backup-helper-*-linux-x64/
+cp ./scripts/memex-backup-helper.desktop ./dist/memex-backup-helper-*-linux-x64/
 cd ./dist/memex-backup-helper-*-linux-x64/
 mkdir src
 # allow ! by setting dotglob in optional shell behavior 

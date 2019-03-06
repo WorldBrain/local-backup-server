@@ -1,8 +1,6 @@
-#!/bin/bash
-mkdir /usr/local/bin/MemexBackupHelper
+#!/bin/sh
+mkdir -p ~/.memex-backup-helper
 cd ./src
-shopt -s extglob dotglob
-cp -r !(MemexBackupHelper.desktop) /usr/local/bin/MemexBackupHelper
-shopt -u dotglob
-cp ./MemexBackupHelper.desktop ~/.local/share/applications/
-chmod +x ~/.local/share/applications/MemexBackupHelper.desktop 
+sed -e "s/%%user%%/$USER/g" ./memex-backup-helper.desktop > ~/.local/share/applications/memex-backup-helper.desktop
+\cp -r ./* ~/.memex-backup-helper/
+rm ~/.memex-backup-helper/memex-backup-helper.desktop

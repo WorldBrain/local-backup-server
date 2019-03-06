@@ -1,9 +1,0 @@
-[Desktop Entry]
-Version=0.4
-Type=Application
-Terminal=false
-Exec=/usr/local/bin/MemexBackupHelper/memex-backup-helper
-Name=Memex Backup Helper
-Comment=Memex Local Backup Helper
-Icon=/usr/local/bin/MemexBackupHelper/img/appIcon.png
-Categories=Utility;Application;
