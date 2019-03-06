@@ -5,4 +5,3 @@ backup/*
 local-backup-server-*
 .vscode
 dist
-backup_location.txt
