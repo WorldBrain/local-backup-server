@@ -196,7 +196,11 @@ async function openBackupFolder() {
 
 async function startServer() {
     if (!server) {
-        server = app.listen(port)
+        server = await new Promise((resolve, reject) => {
+            let server = app.listen(port, err => {
+                err ? reject(err) : resolve(server)
+            })
+        })
         itemStartServer.enabled = false
         itemStopServer.enabled = true
         itemServerStatus.label = 'Server running'
