@@ -23,14 +23,10 @@
     "mkdirp": "^0.5.1"
   },
   "build": {
-    "nwVersion": "0.35.5",
-    "targets": [
-      "zip"
-    ]
+    "nwVersion": "0.35.5"
   },
   "scripts": {
-    "dist": "build --tasks win-x64,linux-x64,mac-x64 --mirror https://dl.nwjs.io/ . --concurrent",
-    "mac": "build --tasks mac-x64 --mirror https://dl.nwjs.io/ . --concurrent"
+    "dist": "./scripts/build.sh"
   },
   "devDependencies": {
     "nwjs-builder-phoenix": "^1.15.0"
