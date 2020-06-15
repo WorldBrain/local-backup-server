@@ -5,3 +5,4 @@ backup/*
 local-backup-server-*
 .vscode
 dist
+private

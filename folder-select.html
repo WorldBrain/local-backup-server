@@ -1,56 +1,52 @@
 <!DOCTYPE html>
 <html>
-    <head>
-    </head>
-    <body>
-        <div class="contentBox">
-            <div class="cancelRow">
-                <div class="cancel" id="cancelButton"/>
-            </div>
-            <div class="logo"/>
-            <div class="pickFolder">
-                <div class="info">Pick a folder for your local backups.</div>
-                <div class="select-container">
-                    <input type="file" id="folderSelect" nwdirectory directory>
-                    <button class="folder-select-bg">Select Folder</button>
-                </div>
-                <div class="pathBox">
-                    <p class="info" id="pathPara"></p>
-                    <button id="applyButton" disabled>Confirm</button>
-                </div>
-            </div>
-        </div>  
-        <link rel="stylesheet" type="text/css" href="./folder-select.css">
-        <link rel="stylesheet" type="text/css" href="./fonts/Poppins/poppins.css">
-        <script src="./HTTPKoaServer.js" ></script>
-        <script>
+  <head> </head>
+  <body>
+    <div class="contentBox">
+      <div class="cancelRow">
+        <div class="cancel" id="cancelButton" />
+      </div>
+      <div class="logo" />
+      <div class="pickFolder">
+        <div class="info">Pick a folder for your local backups.</div>
+        <div class="select-container">
+          <input type="file" id="folderSelect" nwdirectory directory />
+          <button class="folder-select-bg">Select Folder</button>
+        </div>
+        <div class="pathBox">
+          <p class="info" id="pathPara"></p>
+          <button id="applyButton" disabled>Confirm</button>
+        </div>
+      </div>
+    </div>
+    <link rel="stylesheet" type="text/css" href="./folder-select.css" />
+    <link rel="stylesheet" type="text/css" href="./fonts/Poppins/poppins.css" />
+    <script src="./HTTPKoaServer.js"></script>
+    <script>
+      var win = gui.Window.get();
+      win.setShowInTaskbar(false);
+      var folderSelect = document.getElementById("folderSelect");
+      var applyButton = document.getElementById("applyButton");
+      var pathPara = document.getElementById("pathPara");
+      var cancelButton = document.getElementById("cancelButton");
 
-            var win = gui.Window.get()
-            win.setShowInTaskbar(false)
-            var folderSelect = document.getElementById('folderSelect')
-            var applyButton = document.getElementById('applyButton')
-            var pathPara = document.getElementById('pathPara')
-            var cancelButton = document.getElementById('cancelButton')
-
-            win.on('loaded', () => {
-                if (backupPath) {
-                    pathPara.innerHTML = '<span>Backup Location:</span><br>'
-                    + backupPath; 
-                }
-            })
-            folderSelect.addEventListener('change', () => {
-                var path = '' + folderSelect.value
-                if (path && path != backupPath) {
-                    if (path.length > 35) {
-                        path = '...' + path.slice(-35)
-                    }
-                    applyButton.disabled = false
-                    pathPara.innerHTML = '<span>Backup Location:</span><br>'
-                    + path;
-                } else {
-                    applyButton.disabled = true
-                }
-            })
-        </script>
-    </body>
+      win.on("loaded", () => {
+        if (backupPath) {
+          pathPara.innerHTML = "<span>Backup Location:</span><br>" + backupPath;
+        }
+      });
+      folderSelect.addEventListener("change", () => {
+        var path = "" + folderSelect.value;
+        if (path && path != backupPath) {
+          if (path.length > 35) {
+            path = "..." + path.slice(-35);
+          }
+          applyButton.disabled = false;
+          pathPara.innerHTML = "<span>Backup Location:</span><br>" + path;
+        } else {
+          applyButton.disabled = true;
+        }
+      });
+    </script>
+  </body>
 </html>
