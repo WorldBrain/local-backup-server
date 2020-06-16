@@ -3,17 +3,25 @@
     <head>
     </head>
     <body>
-        <div class="cancel" id="cancelButton"><img src="./img/cross.svg"/></div>
-        <img src="./img/icon_128x128.png">
-        <p class="info">Pick a folder for your local backups.</p>
-        <div class="select-container">
-            <button class="folder-select-bg">Select Folder</button>
-            <input type="file" id="folderSelect" nwdirectory directory>
-        </div>
-        <p id="pathPara"></p>
-        <button id="applyButton" disabled>Confirm</button>
+        <div class="contentBox">
+            <div class="cancelRow">
+                <div class="cancel" id="cancelButton"/>
+            </div>
+            <div class="logo"/>
+            <div class="pickFolder">
+                <div class="info">Pick a folder for your local backups.</div>
+                <div class="select-container">
+                    <input type="file" id="folderSelect" nwdirectory directory>
+                    <button class="folder-select-bg">Select Folder</button>
+                </div>
+                <div class="pathBox">
+                    <p class="info" id="pathPara"></p>
+                    <button id="applyButton" disabled>Confirm</button>
+                </div>
+            </div>
+        </div>  
         <link rel="stylesheet" type="text/css" href="./folder-select.css">
-        <link rel="stylesheet" type="text/css" href="./fonts/inter/inter.css">
+        <link rel="stylesheet" type="text/css" href="./fonts/Poppins/poppins.css">
         <script src="./HTTPKoaServer.js" ></script>
         <script>
 

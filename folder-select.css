@@ -1,40 +1,55 @@
 body {
-    font-family: 'Inter';
-    display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: auto auto auto auto 1fr;
-    justify-items: center;
-    grid-template-areas:
-        "logo"
-        "para"
-        "file_input"
-        "path"
-        "apply_button";
+    font-family: 'Poppins';
+    padding: 20px 30px;
 }
 p {
     color: #173766;
     font-weight: 200;
     font-size: 16px;
 }
-img {
-    grid-area: logo;
-    width: 70%;
-    margin-top: 30px;
-    margin-bottom: 30px;
+
+.cancelRow {
+    display: flex;
+    justify-content: flex-end;
 }
-.info {
-    grid-area: para;
-    font-weight: 500;
+
+.contentBox {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
 }
-.select-container {
-    grid-area: file_input;
-    width: 100px;
-    height: 30px;
-    width: 120px;
-    cursor: pointer;
-}
-.folder-select-bg {
+
+.pickFolder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     position: absolute;
+    top: 160px;
+}
+
+.logo {
+    background-image: url('./img/memex-logo.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 100%;
+    height: 120px;
+}
+
+.info {
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.select-container {
+    cursor: pointer;
+    width: 120px;
+    height: 30px;
+}
+
+.folder-select-bg {
     width: 120px;
     height: 30px;
     color: white;
@@ -43,22 +58,27 @@ img {
     border: 2px solid #173766;
     background-color: #173766;
     border-radius: 5px;
-
 }
+
 .folder-select-bg:hover {
     color: #173766;
     background-color: white;
 }
-input {
+
+#folderSelect {
     position: absolute;
+    top: 30px;
+    height: 30px;
+    z-index: 2500;
+}
+
+input {
     border-radius: 3px;
     font-size: 0px;
     width: 0px;
     height: 0px;
     border-style: solid;
     border-width: 10px 50px 10px 50px;
-    margin-left: 10px;
-    margin-top: 5px;
     border-color: transparent;
     background-color: transparent;
     border-radius: 5px;
@@ -68,10 +88,18 @@ input:focus {
     outline: none;
     cursor: pointer;
 }
+
+.pathBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    flex-direction: column;
+}
+
 #pathPara {
     text-align: center;
-    grid-area: path;
-    font-size: 16px;
+    font-size: 12px;
     color: #3eb995;
     font-style: italic;
     font-weight: 300;
@@ -80,19 +108,16 @@ input:focus {
     text-align: center;
     font-weight: 600;
     font-size: 14px;
-    margin-top: 35px;
     color: #173766;
     font-style: normal;
 }
 #applyButton {
-    grid-area: apply_button;
-    align-self: end;
     background-color: white;
-    border: 2px solid #3eb995;
-    width: 100px;
+    border: 1px solid #3eb995;
+    width: 70px;
     color: #3eb995;
-    font-size: 16px;
-    height: 40px;
+    font-size: 14px;
+    height: 26px;
     border-radius: 4px;
     cursor: pointer;   
 
@@ -106,16 +131,19 @@ input:focus {
     visibility: hidden;
 }
 .cancel {
+    background-image: url('./img/cross.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
     position: absolute;
     right: 15px;
     margin-top: -15px;
-    color: #424242;
     cursor: pointer;
     width: 25px;
     height: 25px;
-
+    background-size: 16px;
 }
 .cancel:hover {
     background-color: #efefef;
-    border-radius: 20px;
+    border-radius: 5px;
 }
