@@ -3,14 +3,17 @@ Sentry.init({
   dsn:
     "https://017edee629ad48ddaac2a510df0730c2@o138129.ingest.sentry.io/5274376",
 });
-process.on("uncaughtException", (err) => {
-  console.log("uncaught exception");
+process.prependListener("uncaughtException", (err) => {
   Sentry.captureException(err);
 });
 process.on("unhandledRejection", (reason, promise) => {
+  console.log("unhandled rejection");
   promise.catch((err) => Sentry.captureException(err));
 });
-doesNotExist();
+window.onerror = (...args) => {
+  const err = args[4];
+  Sentry.captureException(err);
+};
 
 var fs = require("fs");
 var mkdirp = require("mkdirp");
@@ -41,6 +44,9 @@ async function main() {
   router = new Router();
 
   // error handling
+  app.on("error", (err) => {
+    Sentry.captureException(err);
+  });
   app.use(async (ctx, next) => {
     try {
       await next();
@@ -70,7 +76,7 @@ async function main() {
   });
 
   // get the backup folder location
-  router.get("/backup/location", (ctx) => {
+  router.get("/backup/location", async (ctx) => {
     ctx.body = backupPath;
     ctx.status = 200;
   });
@@ -133,6 +139,10 @@ async function main() {
   app.use(router.routes());
   app.use(router.allowedMethods());
 
+  if (await loadBackupLocation()) {
+    await startServer();
+  }
+
   tray = new nw.Tray({
     tooltip: "Memex Backup Helper",
     icon: "img/tray_icon.png",
@@ -194,7 +204,11 @@ async function main() {
   menu.append(itemCloseApp);
   tray.menu = menu;
 
-  await updateBackupLocation();
+  if (!backupPath) {
+    gui.Window.get().on("loaded", () => {
+      updateBackupLocation();
+    });
+  }
 }
 
 async function closeApp() {
@@ -210,10 +224,17 @@ async function closeTray() {
   }
 }
 
-async function updateBackupLocation() {
-  await stopServer();
+async function loadBackupLocation() {
   if (fs.existsSync("./backup_location.txt")) {
     backupPath = fs.readFileSync("./backup_location.txt", "utf-8");
+    return true;
+  }
+  return false;
+}
+
+async function updateBackupLocation() {
+  await stopServer();
+  if (await loadBackupLocation()) {
     itemOpenBackup.enabled = true;
     await startServer();
   } else {
