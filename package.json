@@ -24,7 +24,7 @@
     "mkdirp": "^0.5.1"
   },
   "build": {
-    "nwVersion": "0.35.5",
+    "nwVersion": "0.46.2",
     "targets": [
       "zip"
     ]

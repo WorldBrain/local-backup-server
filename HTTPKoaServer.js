@@ -31,6 +31,7 @@ var itemServerStatus;
 var itemStartServer;
 var itemStopServer;
 var itemServerStatus;
+var guiInitialized = false;
 
 const port = 11922;
 let backupPath = "";
@@ -206,8 +207,28 @@ async function main() {
 
   if (!backupPath) {
     gui.Window.get().on("loaded", () => {
+      guiInitialized = true;
       updateBackupLocation();
     });
+  }
+}
+
+function updateMenuItems() {
+  if (!guiInitialized) {
+    return;
+  }
+
+  itemOpenBackup.enabled = !!backupPath;
+  if (server) {
+    itemStartServer.enabled = false;
+    itemStopServer.enabled = true;
+    itemServerStatus.label = "Server running";
+    itemServerStatus.icon = "./img/active.png";
+  } else {
+    itemStopServer.enabled = false;
+    itemStartServer.enabled = true;
+    itemServerStatus.label = "Server not running";
+    itemServerStatus.icon = "./img/inactive.png";
   }
 }
 
@@ -235,12 +256,11 @@ async function loadBackupLocation() {
 async function updateBackupLocation() {
   await stopServer();
   if (await loadBackupLocation()) {
-    itemOpenBackup.enabled = true;
     await startServer();
   } else {
-    itemOpenBackup.enabled = false;
     await selectNewBackupFolder();
   }
+  updateMenuItems();
 }
 
 async function closeFolderSelect() {
@@ -285,10 +305,7 @@ async function startServer() {
         err ? reject(err) : resolve(server);
       });
     });
-    itemStartServer.enabled = false;
-    itemStopServer.enabled = true;
-    itemServerStatus.label = "Server running";
-    itemServerStatus.icon = "./img/active.png";
+    updateMenuItems();
   }
 }
 
@@ -296,10 +313,7 @@ async function stopServer() {
   if (server) {
     server.close();
     server = undefined;
-    itemStopServer.enabled = false;
-    itemStartServer.enabled = true;
-    itemServerStatus.label = "Server not running";
-    itemServerStatus.icon = "./img/inactive.png";
+    updateMenuItems();
   }
 }
 
