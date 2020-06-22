@@ -1,7 +1,7 @@
 {
   "name": "memex-backup-helper",
   "description": "Local app to make your Memex backups to any folder.",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "main": "folder-select.html",
   "window": {
     "show": false,
@@ -24,13 +24,13 @@
     "mkdirp": "^0.5.1"
   },
   "build": {
-    "nwVersion": "0.46.2",
+    "nwVersion": "0.40.0",
     "targets": [
       "zip"
     ]
   },
   "scripts": {
-    "dist": "build --tasks win-x64,linux-x64,mac-x64 --mirror https://dl.nwjs.io/ . --concurrent",
+    "dist": "build --tasks win-x86,win-x64,linux-x64,mac-x64 --mirror https://dl.nwjs.io/ . --concurrent",
     "mac": "build --tasks mac-x64 --mirror https://dl.nwjs.io/ . --concurrent"
   },
   "devDependencies": {
