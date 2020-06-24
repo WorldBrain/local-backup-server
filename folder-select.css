@@ -49,8 +49,20 @@ p {
     height: 30px;
 }
 
+#folder-select {
+    width: 120px;
+    height: 30px;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    border: 2px solid #173766;
+    background-color: #173766;
+    border-radius: 5px;
+}
+
 .folder-select-bg {
     width: 120px;
+    padding: 5px 10px;
     height: 30px;
     color: white;
     font-size: 15px;
