@@ -96,7 +96,6 @@ async function main() {
       if (err) throw err;
       const filepath = dirpath + `/${filename}`;
       fs.writeFile(filepath, ctx.request.body, function (err) {
-        console.log({ err, wefw: "three" });
         if (err) throw err;
       });
     });
@@ -254,9 +253,8 @@ async function loadBackupLocation() {
 }
 
 async function updateBackupLocation() {
-  await stopServer();
   if (await loadBackupLocation()) {
-    await startServer();
+      await startServer();
   } else {
     await selectNewBackupFolder();
   }
@@ -300,7 +298,7 @@ async function openBackupFolder() {
 async function startServer() {
   console.log("start server");
   if (!server) {
-    server = await new Promise((resolve, reject) => {
+    server = new Promise((resolve, reject) => {
       let server = app.listen(port, (err) => {
         err ? reject(err) : resolve(server);
       });
@@ -311,7 +309,11 @@ async function startServer() {
 
 async function stopServer() {
   if (server) {
-    server.close();
+    await new Promise(async resolve => {
+      (await server).close(err => {
+        resolve()
+      })
+    })
     server = undefined;
     updateMenuItems();
   }
