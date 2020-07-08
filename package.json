@@ -1,7 +1,7 @@
 {
   "name": "memex-backup-helper",
   "description": "Local app to make your Memex backups to any folder.",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "main": "folder-select.html",
   "window": {
     "show": false,
