@@ -299,7 +299,7 @@ async function startServer() {
   console.log("start server");
   if (!server) {
     server = new Promise((resolve, reject) => {
-      let server = app.listen(port, (err) => {
+      let server = app.listen(port, '127.0.0.1', (err) => {
         err ? reject(err) : resolve(server);
       });
     });
